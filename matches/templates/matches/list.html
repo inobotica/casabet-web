@@ -1,0 +1,142 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head>{% load static %}</head>
+
+<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
+
+<style>
+
+	body{
+		background-color: #264653;
+	}
+
+	input{
+		width: 100%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		box-sizing: border-box;
+	}
+
+	input::placeholder {
+	  color: #d3d3d3;
+	}
+
+	.submit{
+		background-color: #e76f51;
+	}
+
+	.center-column{
+		width:600px;
+		margin: 20px auto;
+		padding:20px;
+		/*background-color: rgb(235, 235, 235);
+		border-radius: 3px;
+		box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);
+		*/
+	}
+
+	.item-row{
+		background-color: #2a9d8f;
+		margin: 10px;
+		padding: 10px;
+		border-radius: 3px;
+		color: #fff;
+		font-size: 16px;
+		box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
+	}
+
+	.btn-danger{
+		background-color: #f4a261;
+		border-color: #f59a50;
+	}
+
+	/* Added for table styling */
+
+	/* Table general style*/
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		color: #fff;
+		width: 100%;
+	}
+
+	/* table.PerformanceTable {
+		table-layout: fixed;
+		width: 500px;
+	}	
+
+    table.PerformanceTable td.PerformanceCell {
+        width: 100px;
+    }*/
+
+	/* cell style */
+	td {
+		border: 0px solid #dddddd;
+		text-align: center;
+		padding: 4px;
+	}
+
+	/* Header cell style*/
+	th {
+		border: 0px solid #dddddd;
+		text-align: left;
+		padding: 2px;  
+	}
+
+	/*Header cell custom style*/
+	.thCustom {
+		border: 0px solid #dddddd;
+		text-align: right;
+		padding: 4px;  
+	}
+
+	/*row custom style for score*/
+	.trMatchScore{
+	font-size:30px
+	}
+
+
+</style>
+
+<div class="center-column">
+
+
+	{% for match in matches %}
+		<div class="item-row">		
+			<table>
+				<tr>
+				  <th>{{match.sport}} / {{match.ligue}}</th>
+				  <th class= "thCustom">{{match.timeMinutes}}:{{match.timeSeconds}}</th>
+				</tr>
+			</table>
+			<table>
+				<tr>
+				  <td>{{match.homeName}}</td>
+				  <td>VS</td>
+				  <td>{{match.awayName}}</td>
+				</tr>    
+				<tr class="trMatchScore">
+				  <td>{{match.score.home}}</td>
+				  <td>:</td>
+				  <td>{{match.score.away}}</td>
+				</tr>
+				<tr>
+					<td>Victoria</td>
+					<td>Empate</td>
+					<td>Derrota</td>
+				  </tr>
+				<tr>
+				  <td>{{match.homeOdds}}</td>
+				  <td>{{match.xOdds}}</td>
+				  <td>{{match.awayOdds}}</td>
+				</tr>  
+			</table>
+			<!--
+			<p><span>{{match.sport}} / {{match.ligue}}   time:{{match.timeMinutes}}</span></p>			
+			<p><span>{{match.name}}</span></p>
+			<p><span>{{match.score.home}} vs {{match.score.away}}</span></p>
+			<p><span>{{match.homeOdds}} {{match.xOdds}} {{match.awayOdds}}</span></p>
+			-->
+		</div>
+	{% endfor %}
+
+</div>
