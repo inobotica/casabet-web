@@ -11,6 +11,9 @@ def index(request):
     
     try:
         data = r.json()
+        print('AWS matches:', len(data))
+        if len(data)== 0 or len(data)==1:
+            print('data', data)
     except json.decoder.JSONDecodeError as e:
         print('Empty response from server')
         data = []
@@ -39,9 +42,6 @@ def index(request):
             'awayOdds':"{:.1f}%".format(r_away_odds) if r_away_odds > 0 else '-',
         })
 
-
-    print('AWS matches:', len(data))
     context = {'matches':data}
 
-    #return HttpResponse(data)
     return render(request, 'matches/list.html', context)
