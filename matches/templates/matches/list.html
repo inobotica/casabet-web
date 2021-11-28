@@ -25,7 +25,8 @@
 	}
 
 	.center-column{
-		width:600px;
+		/*width:600px;		*/
+		width: 80%;
 		margin: 20px auto;
 		padding:20px;
 		/*background-color: rgb(235, 235, 235);
@@ -47,6 +48,11 @@
 	.btn-danger{
 		background-color: #f4a261;
 		border-color: #f59a50;
+	}
+
+	.sport-icon{
+		text-align: right;
+		padding: 2px;
 	}
 
 	/* Added for table styling */
@@ -85,8 +91,8 @@
 	/*Header cell custom style*/
 	.thCustom {
 		border: 0px solid #dddddd;
-		text-align: right;
-		padding: 4px;  
+		text-align: left;
+		padding: 2px;  
 	}
 
 	/*row custom style for score*/
@@ -94,6 +100,9 @@
 	font-size:30px
 	}
 
+	.matchTittle{
+		padding-bottom: 5%;
+	}
 
 </style>
 
@@ -102,17 +111,28 @@
 
 	{% for match in matches %}
 		<div class="item-row">		
-			<table>
+			<table class="matchTittle">
 				<tr>
-				  <th>{{match.sport}} / {{match.ligue}}</th>
-				  <th class= "thCustom">{{match.timeMinutes}}:{{match.timeSeconds}}</th>
+					{% if match.sportKey == "football" %}
+						<th style="width:8%" class="sport-icon"><img src="{% static 'images/soccerball-w.svg' %}" type="image/svg" style="width:35%"></th>
+					{% elif match.sportKey == "tennis" %}
+						<th style="width:8%" class="sport-icon"><img src="{% static 'images/tennisball-w.svg' %}" type="image/svg" style="width:35%"></th>
+					{% elif match.sportKey == "basketball" %}
+						<th style="width:8%" class="sport-icon"><img src="{% static 'images/basketball-w.svg' %}" type="image/svg" style="width:35%"></th>
+					{% elif match.sportKey == "volleyball" %}
+						<th style="width:8%" class="sport-icon"><img src="{% static 'images/volleyball-w.svg' %}" type="image/svg" style="width:35%"></th>
+					{% endif %}					
+					
+				  	<th>{{match.sport}} / {{match.ligue}}</th>
+					<th style="width:8%" class="sport-icon"><img src="{% static 'images/alarm-clock-w.svg' %}" type="image/svg" style="width:35%"></th>  
+				  	<th class= "thCustom">{{match.timeMinutes}}:{{match.timeSeconds}}</th>
 				</tr>
 			</table>
 			<table>
 				<tr>
-				  <td>{{match.homeName}}</td>
-				  <td>VS</td>
-				  <td>{{match.awayName}}</td>
+				  <td style="width:33%">{{match.homeName}}</td>
+				  <td style="width:33%">VS</td>
+				  <td style="width:33%">{{match.awayName}}</td>
 				</tr>    
 				<tr class="trMatchScore">
 				  <td>{{match.score.home}}</td>
@@ -130,12 +150,6 @@
 				  <td>{{match.awayOdds}}</td>
 				</tr>  
 			</table>
-			<!--
-			<p><span>{{match.sport}} / {{match.ligue}}   time:{{match.timeMinutes}}</span></p>			
-			<p><span>{{match.name}}</span></p>
-			<p><span>{{match.score.home}} vs {{match.score.away}}</span></p>
-			<p><span>{{match.homeOdds}} {{match.xOdds}} {{match.awayOdds}}</span></p>
-			-->
 		</div>
 	{% endfor %}
 
