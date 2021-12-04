@@ -8,7 +8,8 @@ from django.http      import HttpResponse
 def index(request):
     URL = "https://1xuovgghf1.execute-api.us-east-1.amazonaws.com/production/GetOdds"
     r = requests.get(url = URL)#, params = PARAMS)
-    
+    get_location_of_user(request)
+
     try:
         data = r.json()
         print('AWS matches:', len(data))
@@ -45,3 +46,30 @@ def index(request):
     context = {'matches':data}
 
     return render(request, 'matches/list.html', context)
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    print('IP:', ip)
+
+    return ip
+
+def get_location_of_user(request):
+    ip  = get_client_ip(request)
+    URL = f"http://ip-api.com/json/{ip}"
+    r   = requests.get(url = URL)#, params = PARAMS)
+    keys= ['country','countryCode','region','regionName','city','zip','lat','lon']
+
+    if r.status_code == 200:
+        try:
+            data = r.json()              
+            user_location_info = {your_key: data[your_key] for your_key in keys}        
+            print('User location', user_location_info)  
+        except json.decoder.JSONDecodeError as e:
+            print('Empty response from server')
+            data = []
