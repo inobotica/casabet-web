@@ -1,30 +1,62 @@
-import requests
-import json
+import requests, json, time, copy
 
 from django.shortcuts import render
 from django.http      import HttpResponse
+from .lib.constants import BETHOUSES
+
+URL = "https://1xuovgghf1.execute-api.us-east-1.amazonaws.com/production/GetOdds"
+FREQUENCY = 30
+
+matches_buffer = {
+    'time':int(time.time()),
+    'data':None
+}
 
 # Create your views here.
-def index(request):
-    URL = "https://1xuovgghf1.execute-api.us-east-1.amazonaws.com/production/GetOdds"
-    r = requests.get(url = URL)#, params = PARAMS)
-    get_location_of_user(request)
+def index(request):  
+    global matches_buffer
+    print('GET params:', request.GET)
+    q_string = ''
 
-    try:
-        data = r.json()
+    if 'debug' in request.GET and request.GET['debug']=='true':
+        print('Debugging', URL)
+        q_string = '?debug=true'
+
+
+    time_delta = True if int(time.time())-matches_buffer['time'] > FREQUENCY else False
+
+    if time_delta or not matches_buffer['data']:
+        print('Getting matches info from server...')
+
+        r = requests.get(url = f'{URL}{q_string}')
+        #get_location_of_user(request)
+
+        try:
+            data = r.json()
+
+            if not len(data) or len(data)==1:
+                print('Empty response from server')
+                data = []
+            else:
+                matches_buffer.update({
+                    'time':int(time.time()),
+                    'data':r.json()
+                })
+
+            print('AWS matches:', len(data))
+            
+        except json.decoder.JSONDecodeError as e:
+            print('Empty response from server')
+            data = []
+    else:
+        print('Using buffer information... time to expire {}'.format(FREQUENCY-(int(time.time())-matches_buffer['time'])))
+        data = copy.deepcopy(matches_buffer['data'])
         print('AWS matches:', len(data))
-        if len(data)== 0 or len(data)==1:
-            print('data', data)
-    except json.decoder.JSONDecodeError as e:
-        print('Empty response from server')
-        data = []
 
     # update values
     for index, row in enumerate(data):
 
-        # Update leading zeros
-        
-        print(data[index])
+        #print(data[index])
 
         # Update odds
         h_odds = 1/data[index]['homeOdds'] if data[index]['homeOdds'] else 0

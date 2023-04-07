@@ -1,5 +1,8 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<head>{% load static %}</head>
+<head>
+	{% load static %}
+	<title>Recomendador de apuestas</title>
+</head>
 
 <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
 
@@ -7,6 +10,8 @@
 
 	body{
 		background-color: #264653;
+		max-width: 100%;
+    	overflow-x: hidden;
 	}
 
 	input{
@@ -26,13 +31,86 @@
 
 	.center-column{
 		/*width:600px;		*/
-		width: 80%;
-		margin: 20px auto;
-		padding:20px;
+		width: 40%;
+		margin: 10px auto;
+		padding:10px;
 		/*background-color: rgb(235, 235, 235);
 		border-radius: 3px;
 		box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);
 		*/
+	}
+
+	/* Smartphones (portrait and landscape) ----------- */
+	@media only screen 
+	and (min-device-width : 320px) 
+	and (max-device-width : 480px) {
+		.center-column{
+			width: 80%;
+		}
+	/* Styles */
+	}
+
+	/* Smartphones (portrait and landscape) ----------- */
+	@media only screen 
+	and (min-device-width : 320px) 
+	and (max-device-width : 480px) {
+	/* Styles */
+	}
+
+	/* Smartphones (landscape) ----------- */
+	@media only screen 
+	and (min-width : 321px) {	
+		.center-column{
+			width: 80%;
+		}
+	}
+
+	/* Smartphones (portrait) ----------- */
+	@media only screen 
+	and (max-width : 320px) {
+	/* Styles */
+	}
+
+	/* iPads (portrait and landscape) ----------- */
+	@media only screen 
+	and (min-device-width : 768px) 
+	and (max-device-width : 1024px) {
+	/* Styles */
+	}
+
+	/* iPads (landscape) ----------- */
+	@media only screen 
+	and (min-device-width : 768px) 
+	and (max-device-width : 1024px) 
+	and (orientation : landscape) {
+	/* Styles */
+	}
+
+	/* iPads (portrait) ----------- */
+	@media only screen 
+	and (min-device-width : 768px) 
+	and (max-device-width : 1024px) 
+	and (orientation : portrait) {
+	/* Styles */
+	}
+
+	/* Desktops and laptops ----------- */
+	@media only screen 
+	and (min-width : 1224px) {
+	/* Styles */
+	}
+
+	/* Large screens ----------- */
+	@media only screen 
+	and (min-width : 1824px) {
+	/* Styles */
+	}
+
+	/* iPhone 4 ----------- */
+	@media
+	only screen and (-webkit-min-device-pixel-ratio : 1.5),
+	only screen and (min-device-pixel-ratio : 1.5) {
+	/* Styles */
 	}
 
 	.item-row{
@@ -114,17 +192,17 @@
 			<table class="matchTittle">
 				<tr>
 					{% if match.sportKey == "football" %}
-						<th style="width:8%" class="sport-icon"><img src="{% static 'images/soccerball-w.svg' %}" type="image/svg" style="width:35%"></th>
+						<th style="width:6%" class="sport-icon"><img src="{% static 'images/soccerball-w.svg' %}" type="image/svg" style="width:35%"></th>
 					{% elif match.sportKey == "tennis" %}
-						<th style="width:8%" class="sport-icon"><img src="{% static 'images/tennisball-w.svg' %}" type="image/svg" style="width:35%"></th>
+						<th style="width:6%" class="sport-icon"><img src="{% static 'images/tennisball-w.svg' %}" type="image/svg" style="width:35%"></th>
 					{% elif match.sportKey == "basketball" %}
-						<th style="width:8%" class="sport-icon"><img src="{% static 'images/basketball-w.svg' %}" type="image/svg" style="width:35%"></th>
+						<th style="width:6%" class="sport-icon"><img src="{% static 'images/basketball-w.svg' %}" type="image/svg" style="width:35%"></th>
 					{% elif match.sportKey == "volleyball" %}
-						<th style="width:8%" class="sport-icon"><img src="{% static 'images/volleyball-w.svg' %}" type="image/svg" style="width:35%"></th>
+						<th style="width:6%" class="sport-icon"><img src="{% static 'images/volleyball-w.svg' %}" type="image/svg" style="width:35%"></th>
 					{% endif %}					
 					
 				  	<th>{{match.sport}} / {{match.ligue}}</th>
-					<th style="width:8%" class="sport-icon"><img src="{% static 'images/alarm-clock-w.svg' %}" type="image/svg" style="width:35%"></th>  
+					<th style="width:5%" class="sport-icon"><img src="{% static 'images/alarm-clock-w.svg' %}" type="image/svg" style="width:35%"></th>  
 				  	<th class= "thCustom">{{match.timeMinutes}}:{{match.timeSeconds}}</th>
 				</tr>
 			</table>

@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+from django.conf.urls.static import static
+
+from django.views.static import serve 
+from django.conf import settings
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
@@ -23,5 +27,8 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('matches.urls')),
-    path('favicon.png', RedirectView.as_view(url=staticfiles_storage.url('images/favicon.png')))
+    path('favicon.png', RedirectView.as_view(url=staticfiles_storage.url('images/favicon.png'))),    
 ]
+
+if not settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
